@@ -27,7 +27,8 @@ export default class OnboardingWebPart extends BaseClientSideWebPart<IOnboarding
       Onboarding,
       {
         sp: this._sp,
-        site: this._site
+        site: this._site,
+        padded: this._needsPadding()
       }
     );
 
@@ -51,6 +52,16 @@ export default class OnboardingWebPart extends BaseClientSideWebPart<IOnboarding
       isOwner: page.web.permissions.hasAllPermissions(SPPermission.manageLists, SPPermission.managePermissions),
       devTools: this._servedLocally()
     };
+  }
+
+  /*
+   * True where SharePoint leaves no margin round the web part: a full-page app,
+   * which isn't in a section at all, or a full-width section. Normal sections
+   * already leave one, so adding more there would double it.
+   */
+  private _needsPadding(): boolean {
+    const zone = this.domElement.closest('.CanvasZone');
+    return !zone || zone.classList.contains('CanvasZone--fullWidth');
   }
 
   /* True when the code is loading from the local dev server (heft start), as with ?debugManifestsFile=. */

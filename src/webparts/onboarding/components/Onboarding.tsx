@@ -26,7 +26,7 @@ type Status =
  * are there; site owners get the full check, so anything missing or changed by
  * hand shows up as something they can fix with one click.
  */
-const Onboarding: React.FC<IOnboardingProps> = ({ sp, site }) => {
+const Onboarding: React.FC<IOnboardingProps> = ({ sp, site, padded }) => {
   const [status, setStatus] = React.useState<Status>({ kind: 'checking' });
 
   const check = React.useCallback(async (notice?: string): Promise<void> => {
@@ -74,7 +74,7 @@ const Onboarding: React.FC<IOnboardingProps> = ({ sp, site }) => {
   };
 
   return (
-    <section className={styles.onboarding}>
+    <section className={padded ? `${styles.onboarding} ${styles.padded}` : styles.onboarding}>
       {status.kind === 'checking' && <Spinner size={SpinnerSize.large} label={TOOL_OPENING.opening} />}
 
       {status.kind === 'failed' && (

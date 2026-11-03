@@ -17,6 +17,15 @@
   }
 }
 
+// A full-page app or a full-width section has no margin of its own.
+.padded {
+  padding: 24px 32px 32px;
+
+  @media (max-width: 640px) {
+    padding: 16px;
+  }
+}
+
 .notice {
   padding: 24px 0;
   text-align: center;
