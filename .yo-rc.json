@@ -1,0 +1,23 @@
+{
+  "@microsoft/generator-sharepoint": {
+    "whichFolder": "subdir",
+    "solutionName": "react-onboarding",
+    "environment": "spo",
+    "packageManager": "npm",
+    "useGulp": false,
+    "componentType": "webpart",
+    "template": "react",
+    "componentName": "Onboarding",
+    "componentDescription": "Onboarding checklist web part",
+    "plusBeta": false,
+    "isCreatingSolution": true,
+    "nodeVersion": "22.14.0",
+    "sdksVersions": {},
+    "version": "1.23.2",
+    "libraryName": "react-onboarding",
+    "libraryId": "1d86a1f0-22df-482d-8af3-72b3ac5d7da7",
+    "solutionShortDescription": "react-onboarding description",
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false
+  }
+}

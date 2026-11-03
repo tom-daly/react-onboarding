@@ -1,0 +1,70 @@
+@use 'shared' as *;
+
+/* Each section colour, and the pill that shows a section's name in it. A
+   tone class sets the colours; the pill, and the stripe down a card, use them.
+   Fixed, not from the site's theme, so a section looks the same everywhere.
+   Each text colour is readable on its pill. */
+
+.teal {
+  --tone-bg: #d9f2ef;
+  --tone-text: #00605f;
+  --tone-edge: #00897b;
+}
+
+.purple {
+  --tone-bg: #ebe4f7;
+  --tone-text: #59308f;
+  --tone-edge: #7b52c4;
+}
+
+.blue {
+  --tone-bg: #dfeafa;
+  --tone-text: #1b4b8a;
+  --tone-edge: #3b78c8;
+}
+
+.orange {
+  --tone-bg: #fdebd9;
+  --tone-text: #8a3f00;
+  --tone-edge: #d9730d;
+}
+
+.pink {
+  --tone-bg: #fbe3ee;
+  --tone-text: #8f1f55;
+  --tone-edge: #c93a7d;
+}
+
+.green {
+  --tone-bg: #e1f3dc;
+  --tone-text: #2b6118;
+  --tone-edge: #4f9a35;
+}
+
+.grey {
+  --tone-bg: #edebe9;
+  --tone-text: #484644;
+  --tone-edge: #a19f9d;
+}
+
+.pill {
+  display: inline-block;
+  padding: 0 8px;
+  border-radius: 999px;
+  background: var(--tone-bg);
+  color: var(--tone-text);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 20px;
+  white-space: nowrap;
+}
+
+// A small round colour mark, for picking a colour.
+.swatch {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--tone-edge);
+  vertical-align: -2px;
+}

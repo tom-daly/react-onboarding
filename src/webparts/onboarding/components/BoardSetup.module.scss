@@ -1,0 +1,189 @@
+@use 'shared' as *;
+
+/* The Sections & columns page, and the colour picker on the section form. */
+
+.setup {
+  // The section rows line up in columns when there's room, and stack when the web part is narrow.
+  container-type: inline-size;
+}
+
+.block {
+  margin: 0 0 32px;
+}
+
+.blockHead {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 12px;
+
+  h3 {
+    margin: 0 0 4px;
+    font-size: 16px;
+  }
+
+  p {
+    margin: 0;
+    max-width: 62ch;
+    font-size: 13px;
+    color: $subtext;
+  }
+}
+
+.rows {
+  @include listReset;
+  @include frame;
+  overflow: hidden;
+  background: $surface;
+}
+
+// Each section: its name, when it's due, how many tasks, then the buttons. A stripe in its colour down the left.
+.row {
+  display: grid;
+  grid-template-columns: minmax(160px, 1fr) minmax(200px, 2fr) minmax(80px, 1fr) auto;
+  gap: 4px 16px;
+  align-items: center;
+  padding: 10px 8px 10px 14px;
+  border-left: 4px solid;
+  border-left-color: var(--tone-edge);
+  @include edge($line, bottom);
+
+  &:last-child {
+    border-bottom: 0;
+  }
+}
+
+@container (max-width: 560px) {
+  .row {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .rowActions {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+  }
+}
+
+.rowName {
+  min-width: 0;
+}
+
+.small {
+  font-size: 13px;
+  color: $subtext;
+}
+
+.tag {
+  padding: 0 8px;
+  border-radius: 999px;
+  background: $wash;
+  color: $subtext;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 18px;
+}
+
+.tagFinished {
+  background: $goodSoft;
+  color: $goodText;
+}
+
+.rowActions {
+  display: flex;
+  flex: none;
+  align-items: center;
+}
+
+.empty {
+  margin: 0;
+  @include dashedNote(16px);
+  font-size: 13px;
+}
+
+/* ---------- the board's columns, shown left to right ---------- */
+
+.lane {
+  @include listReset;
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.laneColumn {
+  display: flex;
+  // Stretch to fill the row; with a lot of columns, the row scrolls sideways.
+  flex: 1 1 0;
+  min-width: 160px;
+  flex-direction: column;
+  gap: 6px;
+  min-height: 96px;
+  padding: 10px 10px 6px;
+  @include frame;
+  background: $wash;
+}
+
+.laneName {
+  @include caps(12px);
+  color: $text;
+  overflow-wrap: anywhere;
+}
+
+.laneTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  flex: 1 1 auto;
+  align-content: flex-start;
+}
+
+.laneActions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.warning {
+  margin-top: 12px;
+}
+
+/* ---------- picking a section's colour ---------- */
+
+.colours {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.colour {
+  @include plainButton;
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  height: 30px;
+  padding: 0 12px 0 8px;
+  @include edge($lineStrong);
+  border-radius: 999px;
+  background: $surface;
+  font-size: 13px;
+
+  &:hover {
+    background: $wash;
+  }
+
+  &[aria-checked="true"] {
+    background: var(--tone-bg);
+    border-color: var(--tone-edge);
+    color: var(--tone-text);
+    font-weight: 600;
+  }
+}
+
+.label {
+  display: block;
+  padding: 5px 0;
+  font-weight: 600;
+  font-size: 14px;
+}

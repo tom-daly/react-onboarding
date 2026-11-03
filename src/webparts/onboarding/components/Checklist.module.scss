@@ -1,0 +1,310 @@
+@use 'shared' as *;
+
+/* A new starter's checklist as a board: how far along they are, then the
+   To do, Doing and Done columns of task cards. */
+
+.checklist {
+  max-width: 1200px;
+  padding: 4px 0 24px;
+  // The columns stack when the web part is narrow, not just the window.
+  container-type: inline-size;
+
+  h2 {
+    margin: 0 0 4px;
+  }
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  margin: 0 0 16px;
+  color: $subtext;
+  font-size: 13px;
+}
+
+.summary {
+  margin: 0 0 12px;
+  max-width: 760px;
+  padding: 16px 18px;
+  @include frame;
+  background: $washAlt;
+}
+
+.summaryLine {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  align-items: baseline;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.lateCount {
+  color: $danger;
+  font-size: 13px;
+}
+
+.bar {
+  height: 8px;
+  border-radius: 4px;
+  background: $line;
+  overflow: hidden;
+}
+
+.barFill {
+  height: 100%;
+  border-radius: 4px;
+  background: $primary;
+  transition: width 0.2s ease;
+}
+
+.barDone .barFill {
+  background: $goodText;
+}
+
+.hint {
+  margin: 0 0 16px;
+  font-size: 13px;
+  color: $subtext;
+}
+
+// As many columns as the team set up. With a lot of them, the board scrolls sideways.
+.board {
+  display: grid;
+  grid-template-columns: repeat(var(--columns, 3), minmax(220px, 1fr));
+  gap: 16px;
+  align-items: start;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+@container (max-width: 640px) {
+  .board {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.column {
+  min-height: 120px;
+  padding: 12px;
+  @include frame;
+  background: $wash;
+  transition: background 0.15s ease;
+}
+
+// The column a dragged card would land in.
+.dropHere {
+  background: $primarySoft;
+  @include ring(-2px);
+}
+
+.columnHead {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin: 0 0 10px;
+  @include caps(12px);
+  color: $subtext;
+}
+
+.count {
+  min-width: 20px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: $surface;
+  color: $text;
+  font-size: 11px;
+  line-height: 18px;
+  text-align: center;
+}
+
+.empty {
+  margin: 0;
+  @include dashedNote(16px 8px);
+  font-size: 13px;
+}
+
+.cards {
+  @include listReset;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.card {
+  padding: 10px 12px 10px 10px;
+  @include frame;
+  // A stripe down the left in its part of the month's colour.
+  border-left: 4px solid;
+  border-left-color: var(--tone-edge);
+  background: $surface;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+
+  &[draggable="true"] {
+    cursor: grab;
+  }
+}
+
+// Where the dragged card would land: a dashed space the size of a small card.
+.dropLine {
+  height: 44px;
+  box-sizing: border-box;
+  @include edge($primary, $width: 2px, $style: dashed);
+  border-radius: $r;
+  background: $primarySoft;
+}
+
+// The card being dragged, left behind faded.
+.lifted {
+  opacity: 0.5;
+}
+
+.cardHead {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.title {
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.done {
+  .title {
+    color: $subtext;
+    text-decoration: line-through;
+  }
+
+  // Its section's pill, faded a little.
+  [class*="pill"] {
+    opacity: 0.7;
+  }
+}
+
+// Under the title: its section's pill, when it's due, and Late.
+.when {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  align-items: center;
+  margin-top: 6px;
+  font-size: 12px;
+}
+
+.due {
+  color: $subtext;
+}
+
+.dueLate {
+  color: $danger;
+  font-weight: 600;
+}
+
+// Under the title: who it's for, or who does it.
+.note {
+  margin: 4px 0 0;
+  font-size: 12px;
+  color: $subtext;
+}
+
+.details {
+  margin: 6px 0 0;
+  font-size: 13px;
+  color: $subtext;
+  white-space: pre-line;
+}
+
+.link {
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+  margin-top: 6px;
+  font-size: 13px;
+  color: $primary;
+  @include focusRing;
+}
+
+.tag {
+  display: inline-block;
+  padding: 0 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 18px;
+  vertical-align: 1px;
+}
+
+.tagLate {
+  background: $dangerSoft;
+  color: $danger;
+}
+
+.moves {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.moveButton {
+  @include plainButton;
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+  height: 26px;
+  padding: 0 10px;
+  @include edge($lineStrong);
+  border-radius: 999px;
+  background: $surface;
+  font-size: 12px;
+  font-weight: 600;
+
+  &:hover:not(:disabled) {
+    background: $wash;
+  }
+
+  &:disabled {
+    cursor: default;
+    opacity: 0.5;
+  }
+
+  i {
+    font-size: 10px;
+  }
+}
+
+// A new starter's own board once every task is done.
+.celebrate {
+  max-width: 760px;
+  padding: 48px 24px 40px;
+  @include frame;
+  background: $goodSoft;
+  text-align: center;
+}
+
+.celebrateIcon {
+  display: block;
+  margin-bottom: 12px;
+  font-size: 48px;
+  color: $goodText;
+}
+
+.celebrateTitle {
+  margin: 0 0 8px;
+  font-size: 28px;
+  font-weight: 700;
+  color: $goodText;
+}
+
+.celebrateBody {
+  margin: 0 auto 24px;
+  max-width: 48ch;
+  font-size: 16px;
+}
+
+.srOnly {
+  @include srOnly;
+}

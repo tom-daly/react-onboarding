@@ -1,0 +1,406 @@
+@use 'shared' as *;
+
+/* The pages under the row along the top: the row itself, the look the pages
+   share, the table of new starters and the forms. Colours come from the
+   site's theme. */
+
+/* ---------- the row of pages ---------- */
+
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 0 16px;
+  @include edge($line, bottom);
+}
+
+.tab {
+  margin: 0 0 -1px;
+  padding: 10px 12px;
+  background: none;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  font: inherit;
+  font-size: 14px;
+  line-height: 20px;
+  color: $subtext;
+  white-space: nowrap;
+  cursor: pointer;
+
+  &:hover {
+    color: $text;
+    background: $wash;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  @include focusRing(-2px);
+
+  /* The same word in bold, taking up no height, so a tab is already as wide as
+     it will be when it's the one picked and the row doesn't jump. */
+  &::after {
+    content: attr(data-label);
+    display: block;
+    height: 0;
+    overflow: hidden;
+    visibility: hidden;
+    font-weight: 600;
+  }
+
+  &[aria-current="page"] {
+    color: $text;
+    font-weight: 600;
+    border-bottom-color: $primary;
+  }
+}
+
+// The developer tools, at the far end of the row. Only there on the local dev server.
+.gear {
+  @include plainButton;
+  margin: 0 0 -1px auto;
+  padding: 0 12px;
+  border: 0;
+  background: none;
+  color: $subtext;
+  font-size: 16px;
+
+  &:hover {
+    color: $text;
+    background: $wash;
+  }
+}
+
+/* What the picked page shows. Takes focus when a page opens from somewhere
+   other than the row, so keyboard and screen reader users land on it. */
+.content {
+  &:focus {
+    outline: none;
+  }
+}
+
+/* ---------- shared by the pages ---------- */
+
+.page {
+  padding: 4px 0 24px;
+}
+
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 16px;
+
+  h2 {
+    margin: 0 0 4px;
+  }
+}
+
+.intro {
+  margin: 0;
+  max-width: 62ch;
+  color: $subtext;
+}
+
+.section {
+  max-width: 560px;
+
+  h3 {
+    margin: 0 0 6px;
+  }
+
+  p {
+    margin: 0 0 8px;
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 560px;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.hint {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  color: $subtext;
+}
+
+.saved {
+  font-weight: 600;
+}
+
+.linkButton {
+  @include linkLook;
+  text-align: left;
+  @include focusRing;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.back {
+  @include linkLook(4px 0);
+  margin-bottom: 12px;
+  @include focusRing;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+/* The back arrow in "← Back" links: sits on the text's line, a little smaller. */
+.backArrow {
+  margin-right: 6px;
+  font-size: 0.85em;
+  vertical-align: -1px;
+}
+
+/* No starters, no tasks: a friendly card instead of an empty table. */
+.empty {
+  max-width: 680px;
+  padding: 20px 24px 24px;
+  @include frame;
+  background: $surface;
+
+  p {
+    margin: 0 0 16px;
+    color: $subtext;
+  }
+}
+
+.emptyTitle {
+  margin: 0 0 6px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* A list that has nothing in it right now. */
+.nothing {
+  @include dashedNote(28px 16px);
+}
+
+/* ---------- the table of new starters ---------- */
+
+.tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  color: $subtext;
+  font-size: 13px;
+}
+
+/* Scrolls sideways on narrow screens rather than squashing the columns or widening the page. */
+.tableScroll {
+  max-width: 100%;
+  overflow-x: auto;
+  @include frame;
+  background: $surface;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+
+  th,
+  td {
+    padding: 10px 14px;
+    @include edge($line, bottom);
+    text-align: left;
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+
+  th {
+    padding-top: 9px;
+    padding-bottom: 9px;
+    @include caps;
+    color: $subtext;
+  }
+
+  tbody tr:last-child td {
+    border-bottom: 0;
+  }
+}
+
+.nameCell {
+  min-width: 160px;
+  white-space: normal;
+}
+
+.name {
+  font-weight: 600;
+}
+
+.progressCell {
+  min-width: 160px;
+}
+
+.bar {
+  display: block;
+  width: 120px;
+  height: 6px;
+  margin-bottom: 4px;
+  border-radius: 3px;
+  background: $wash;
+  overflow: hidden;
+}
+
+.barFill {
+  display: block;
+  height: 100%;
+  border-radius: 3px;
+  background: $primary;
+}
+
+.barDone .barFill {
+  background: $goodText;
+}
+
+.small {
+  font-size: 12px;
+  color: $subtext;
+}
+
+/* How many tasks are late: plain when none, red when some. */
+.badge {
+  display: inline-block;
+  min-width: 28px;
+  padding: 2px 10px;
+  box-sizing: border-box;
+  border-radius: 999px;
+  background: $wash;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  color: $subtext;
+}
+
+.badgeLate {
+  background: $dangerSoft;
+  color: $danger;
+}
+
+.rowActions {
+  display: flex;
+  gap: 4px;
+  justify-content: flex-end;
+}
+
+/* ---------- tasks ---------- */
+
+.when {
+  margin: 0 0 24px;
+  max-width: 760px;
+
+  h3 {
+    display: flex;
+    gap: 10px;
+    align-items: baseline;
+    margin: 0 0 8px;
+    font-size: 16px;
+  }
+}
+
+.taskList {
+  @include listReset;
+  @include frame;
+  background: $surface;
+}
+
+.taskRow {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 10px 14px;
+  @include edge($line, bottom);
+
+  &:last-child {
+    border-bottom: 0;
+  }
+}
+
+.taskOrder {
+  flex: none;
+  width: 28px;
+  padding-top: 1px;
+  color: $faint;
+  font-variant-numeric: tabular-nums;
+}
+
+.taskText {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.taskOff {
+  .taskText {
+    color: $subtext;
+  }
+}
+
+.tag {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 0 8px;
+  border-radius: 999px;
+  background: $wash;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 18px;
+  color: $subtext;
+  vertical-align: 1px;
+}
+
+/* ---------- the Onboarding Team ---------- */
+
+.people {
+  @include listReset(12px 0 0);
+  @include edge($line, top);
+}
+
+.person {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+  @include edge($line, bottom);
+}
+
+.addPerson {
+  margin-top: 16px;
+}
+
+/* The spinner while a change saves, then what it did. */
+.teamStatus {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  align-items: center;
+  min-height: 24px;
+  margin: 8px 0;
+}
+
+.srOnly {
+  @include srOnly;
+}

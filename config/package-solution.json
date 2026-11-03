@@ -1,0 +1,40 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "Onboarding Checklist",
+    "id": "1d86a1f0-22df-482d-8af3-72b3ac5d7da7",
+    "version": "1.0.0.0",
+    "includeClientSideAssets": true,
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "developer": {
+      "name": "TMD Consulting LLC",
+      "websiteUrl": "",
+      "privacyUrl": "",
+      "termsOfUseUrl": "",
+      "mpnId": "Undefined-1.23.2"
+    },
+    "metadata": {
+      "shortDescription": {
+        "default": "A checklist for new starters, with their progress for managers to see."
+      },
+      "longDescription": {
+        "default": "A checklist for new starters, with their progress for managers to see."
+      },
+      "screenshotPaths": [],
+      "videoUrl": "",
+      "categories": []
+    },
+    "features": [
+      {
+        "title": "Onboarding Checklist",
+        "description": "The Onboarding checklist web part.",
+        "id": "6b1b95f5-467e-471e-ab08-18306252f325",
+        "version": "1.0.0.0"
+      }
+    ]
+  },
+  "paths": {
+    "zippedPackage": "solution/react-onboarding.sppkg"
+  }
+}
